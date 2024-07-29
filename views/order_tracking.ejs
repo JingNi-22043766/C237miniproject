@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <%- include ('partials/navbar.ejs') %>
+
+    <section id="order-tracking" class="container mt-5">
+        <h1 class="text-center">Track Your Order</h1>
+        <form action="/order_tracking" method="GET" class="mt-4">
+            <div class="mb-3">
+                <label for="orderId" class="form-label">Order ID</label>
+                <input type="text" class="form-control" id="orderId" name="orderId" placeholder="Enter your order ID" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Track Order</button>
+        </form>
+
+        <% if (delivery_information) { %>
+        <div class="mt-5">
+            <h2>Order Details</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tracking Number</th>
+                        <th>Delivery Type</th>
+                        <th>Payment Method</th>
+                        <th>Recipient Name</th>
+                        <th>Phone Number</th>
+                        <th>Delivery Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i < delivery_information.length; i++) { %>
+                    <tr>
+                        <td><%= delivery_information.Tracking_Number %></td>
+                        <td><%= delivery_information.Delivery_Type %></td>
+                        <td><%= delivery_information.Payment_method %></td>
+                        <td><%= delivery_information.Recipient_Name %></td>
+                        <td><%= delivery_information.Recipient_PNo %></td>
+                        <td><%= delivery_information.Recipient_Delivery_Address %></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% } else if (delivery_information !== undefined) { %>
+        <div class="mt-5">
+            <p class="text-danger">Order not found. Please check your Order ID and try again.</p>
+        </div>
+        <% } %>
+    </section>
+</body>
+</html>
